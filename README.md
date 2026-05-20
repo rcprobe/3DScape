@@ -20,28 +20,36 @@ The goal is to demonstrate practical 3D perception engineering: intrinsics, pose
 
 ## Demo Preview
 
-These screenshots are static previews generated from the same embedded point data used by the interactive HTML viewers.
+These static previews are generated from the same embedded point data and default viewpoint used by the interactive viewers.
 
-| RGB-D fusion preview | Reliability diagnostic preview |
+| ARKitScenes RGB-D | ARKitScenes reliability |
 | --- | --- |
-| <img src="docs/assets/tum_freiburg3_viewer_preview.png" alt="3DScape RGB-D fusion point-cloud preview" width="420"> | <img src="docs/assets/tum_freiburg3_reliability_preview.png" alt="3DScape Reliability Net diagnostic point-cloud preview" width="420"> |
+| <img src="docs/assets/arkitscenes_47333462_viewer_preview.png" alt="ARKitScenes RGB-D fusion point-cloud preview" width="420"> | <img src="docs/assets/arkitscenes_47333462_reliability_preview.png" alt="ARKitScenes reliability-colored point-cloud preview" width="420"> |
 
-Interactive demo files are included under `docs/demos/`. GitHub's normal file browser displays HTML as source code, so serve the `docs/` folder locally or enable GitHub Pages from the `docs/` folder.
+| TUM freiburg3 RGB-D | TUM freiburg3 reliability |
+| --- | --- |
+| <img src="docs/assets/tum_freiburg3_long_office_household_viewer_preview.png" alt="TUM freiburg3 RGB-D fusion point-cloud preview" width="420"> | <img src="docs/assets/tum_freiburg3_long_office_household_reliability_preview.png" alt="TUM freiburg3 reliability-colored point-cloud preview" width="420"> |
+
+| TUM freiburg1 RGB-D | TUM freiburg1 reliability |
+| --- | --- |
+| <img src="docs/assets/tum_freiburg1_xyz_viewer_preview.png" alt="TUM freiburg1 RGB-D fusion point-cloud preview" width="420"> | <img src="docs/assets/tum_freiburg1_xyz_reliability_preview.png" alt="TUM freiburg1 reliability-colored point-cloud preview" width="420"> |
+
+GitHub's normal repository browser displays committed HTML files as source text. Use the GitHub Pages links below for the live viewers.
 
 ## Demo Links
 
-These links are interactive when served from `docs/` locally or through GitHub Pages.
+These links are intended to be opened through GitHub Pages, not through the repository file browser.
 
 | Link | Title |
 | --- | --- |
-| [docs/index.html](docs/index.html) | Demo landing page |
-| [docs/demos/arkitscenes_47333462_viewer.html](docs/demos/arkitscenes_47333462_viewer.html) | ARKitScenes 47333462 RGB-D fusion viewer |
-| [docs/demos/arkitscenes_47333462_reliability_viewer.html](docs/demos/arkitscenes_47333462_reliability_viewer.html) | ARKitScenes 47333462 reliability diagnostic viewer |
-| [docs/demos/tum_freiburg1_xyz_viewer.html](docs/demos/tum_freiburg1_xyz_viewer.html) | TUM freiburg1_xyz RGB-D fusion viewer |
-| [docs/demos/tum_freiburg1_xyz_reliability_viewer.html](docs/demos/tum_freiburg1_xyz_reliability_viewer.html) | TUM freiburg1_xyz reliability diagnostic viewer |
-| [docs/demos/tum_freiburg3_long_office_household_viewer.html](docs/demos/tum_freiburg3_long_office_household_viewer.html) | TUM freiburg3 long office household RGB-D fusion viewer |
-| [docs/demos/tum_freiburg3_long_office_household_reliability_viewer.html](docs/demos/tum_freiburg3_long_office_household_reliability_viewer.html) | TUM freiburg3 long office household reliability diagnostic viewer |
-| [docs/assets/arkitscenes_47333462_preview.mp4](docs/assets/arkitscenes_47333462_preview.mp4) | ARKitScenes 47333462 source video preview |
+| [https://rcprobe.github.io/3DScape/](https://rcprobe.github.io/3DScape/) | Demo landing page |
+| [https://rcprobe.github.io/3DScape/demos/arkitscenes_47333462_viewer.html](https://rcprobe.github.io/3DScape/demos/arkitscenes_47333462_viewer.html) | ARKitScenes 47333462 RGB-D fusion viewer |
+| [https://rcprobe.github.io/3DScape/demos/arkitscenes_47333462_reliability_viewer.html](https://rcprobe.github.io/3DScape/demos/arkitscenes_47333462_reliability_viewer.html) | ARKitScenes 47333462 reliability diagnostic viewer |
+| [https://rcprobe.github.io/3DScape/demos/tum_freiburg1_xyz_viewer.html](https://rcprobe.github.io/3DScape/demos/tum_freiburg1_xyz_viewer.html) | TUM freiburg1_xyz RGB-D fusion viewer |
+| [https://rcprobe.github.io/3DScape/demos/tum_freiburg1_xyz_reliability_viewer.html](https://rcprobe.github.io/3DScape/demos/tum_freiburg1_xyz_reliability_viewer.html) | TUM freiburg1_xyz reliability diagnostic viewer |
+| [https://rcprobe.github.io/3DScape/demos/tum_freiburg3_long_office_household_viewer.html](https://rcprobe.github.io/3DScape/demos/tum_freiburg3_long_office_household_viewer.html) | TUM freiburg3 long office household RGB-D fusion viewer |
+| [https://rcprobe.github.io/3DScape/demos/tum_freiburg3_long_office_household_reliability_viewer.html](https://rcprobe.github.io/3DScape/demos/tum_freiburg3_long_office_household_reliability_viewer.html) | TUM freiburg3 long office household reliability diagnostic viewer |
+| [https://rcprobe.github.io/3DScape/assets/arkitscenes_47333462_preview.mp4](https://rcprobe.github.io/3DScape/assets/arkitscenes_47333462_preview.mp4) | ARKitScenes 47333462 source video preview |
 
 Local demo server:
 
@@ -55,17 +63,17 @@ Then open:
 http://localhost:8000/
 ```
 
-After GitHub Pages is enabled, the demo landing page will be:
+GitHub Pages demo landing page:
 
 ```text
-https://<github-user>.github.io/<repo-name>/
+https://rcprobe.github.io/3DScape/
 ```
 
 ## Reference Inputs
 
 This compressed preview is from ARKitScenes scan `47333462`, the sequence used for the ARKitScenes reconstruction demo. The full raw `.mov` is not committed because it is roughly 503 MB.
 
-<video src="docs/assets/arkitscenes_47333462_preview.mp4" controls width="720"></video>
+<video src="https://rcprobe.github.io/3DScape/assets/arkitscenes_47333462_preview.mp4" controls width="720"></video>
 
 
 ## Pipeline Overview
@@ -242,7 +250,7 @@ workspaces/arkitscenes_47333462_rgbd/
 | `*_raw_metric.ply` | Colored fused point cloud before final downsampling |
 | `*_downsampled_metric.ply` | Smaller colored point cloud for inspection and sharing |
 | `*_occupied_only.npz` | Occupied-surface voxel grid |
-| `*_top_down.png` | 2D overhead density debug preview |
+| `*_top_down.png` | Optional 2D overhead density sanity check, not the main visual output |
 | `*_manifest.json` | Run manifest with inputs, parameters, and output paths |
 | `pointcloud_viewer.html` | Standalone browser viewer with embedded point data |
 

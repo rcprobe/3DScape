@@ -16,13 +16,17 @@ This project does RGB-D reconstruction, fusing RGB frames that have depth, camer
 
 These static previews are generated from the same embedded point data and default viewpoint used by the interactive viewers.
 
-| ARKitScenes 47333462 | ARKitScenes 41418135 |
+| ARKitScenes RGB-D | ARKitScenes reliability |
 | --- | --- |
-| <img src="docs/assets/arkitscenes_47333462_viewer_preview.png" alt="ARKitScenes 47333462 RGB-D fusion point-cloud preview" width="420"> | <img src="docs/assets/arkitscenes_41418135_viewer_preview.png" alt="ARKitScenes 41418135 RGB-D fusion point-cloud preview" width="420"> |
+| <img src="docs/assets/arkitscenes_47333462_viewer_preview.png" alt="ARKitScenes RGB-D fusion point-cloud preview" width="420"> | <img src="docs/assets/arkitscenes_47333462_reliability_preview.png" alt="ARKitScenes reliability-colored point-cloud preview" width="420"> |
 
-| Reliability diagnostic | TUM RGB-D reproducibility scan |
+| TUM freiburg3 RGB-D | TUM freiburg3 reliability |
 | --- | --- |
-| <img src="docs/assets/arkitscenes_47333462_reliability_preview.png" alt="ARKitScenes reliability-colored point-cloud preview" width="420"> | <img src="docs/assets/tum_freiburg3_long_office_household_viewer_preview.png" alt="TUM freiburg3 RGB-D fusion point-cloud preview" width="420"> |
+| <img src="docs/assets/tum_freiburg3_long_office_household_viewer_preview.png" alt="TUM freiburg3 RGB-D fusion point-cloud preview" width="420"> | <img src="docs/assets/tum_freiburg3_long_office_household_reliability_preview.png" alt="TUM freiburg3 reliability-colored point-cloud preview" width="420"> |
+
+| TUM freiburg1 RGB-D | TUM freiburg1 reliability |
+| --- | --- |
+| <img src="docs/assets/tum_freiburg1_xyz_viewer_preview.png" alt="TUM freiburg1 RGB-D fusion point-cloud preview" width="420"> | <img src="docs/assets/tum_freiburg1_xyz_reliability_preview.png" alt="TUM freiburg1 reliability-colored point-cloud preview" width="420"> |
 
 GitHub's normal repository browser displays committed HTML files as source text. Run the local static server below to open the viewers directly. Public web links require GitHub Pages to be enabled from the repo settings.
 
@@ -35,7 +39,6 @@ These links work after running the local demo server:
 | [http://localhost:8000/](http://localhost:8000/) | Demo landing page |
 | [http://localhost:8000/demos/arkitscenes_47333462_viewer.html](http://localhost:8000/demos/arkitscenes_47333462_viewer.html) | ARKitScenes 47333462 RGB-D fusion viewer |
 | [http://localhost:8000/demos/arkitscenes_47333462_reliability_viewer.html](http://localhost:8000/demos/arkitscenes_47333462_reliability_viewer.html) | ARKitScenes 47333462 reliability diagnostic viewer |
-| [http://localhost:8000/demos/arkitscenes_41418135_viewer.html](http://localhost:8000/demos/arkitscenes_41418135_viewer.html) | ARKitScenes 41418135 RGB-D fusion viewer |
 | [http://localhost:8000/demos/tum_freiburg1_xyz_viewer.html](http://localhost:8000/demos/tum_freiburg1_xyz_viewer.html) | TUM freiburg1_xyz RGB-D fusion viewer |
 | [http://localhost:8000/demos/tum_freiburg1_xyz_reliability_viewer.html](http://localhost:8000/demos/tum_freiburg1_xyz_reliability_viewer.html) | TUM freiburg1_xyz reliability diagnostic viewer |
 | [http://localhost:8000/demos/tum_freiburg3_long_office_household_viewer.html](http://localhost:8000/demos/tum_freiburg3_long_office_household_viewer.html) | TUM freiburg3 long office household RGB-D fusion viewer |
@@ -225,7 +228,6 @@ ARKitScenes reconstructions were compared against provided reference meshes usin
 | --- | ---: | ---: | ---: | ---: | ---: |
 | ARKitScenes 47333462 classical RGB-D fusion | 62,953 | 0.0186 m | 0.0432 m | 95.03% | 0.0567 m |
 | ARKitScenes 47333462 Reliability Net soft fusion | 61,468 | 0.0192 m | 0.0441 m | 95.02% | 0.0579 m |
-| ARKitScenes 41418135 classical RGB-D fusion | 105,223 | 0.0245 m | 0.0609 m | 94.32% | 0.0835 m |
 
 The learned reliability path is currently a diagnostic experiment, not a proven reconstruction-quality improvement.
 

@@ -48,7 +48,9 @@ These links work after running the local demo server:
 
 This compressed preview is from ARKitScenes scan `47333462`, the sequence used for the ARKitScenes reconstruction demo. The full raw `.mov` is not committed because it is roughly 503 MB.
 
-<video src="docs/assets/arkitscenes_47333462_preview.mp4" poster="docs/assets/arkitscenes_47333462_video_poster.png" controls preload="metadata" width="720"></video>
+[![ARKitScenes 47333462 source video preview](docs/assets/arkitscenes_47333462_video_poster.png)](docs/assets/arkitscenes_47333462_preview.mp4)
+
+Click the thumbnail to open the compressed source-video preview. The Pages demo renders this same preview as an inline playable video.
 
 
 ## Pipeline Overview

@@ -34,22 +34,22 @@ These static previews are generated from the same embedded point data and defaul
 | --- | --- |
 | <img src="docs/assets/tum_freiburg1_xyz_viewer_preview.png" alt="TUM freiburg1 RGB-D fusion point-cloud preview" width="420"> | <img src="docs/assets/tum_freiburg1_xyz_reliability_preview.png" alt="TUM freiburg1 reliability-colored point-cloud preview" width="420"> |
 
-GitHub's normal repository browser displays committed HTML files as source text. Use the GitHub Pages links below for the live viewers.
+GitHub's normal repository browser displays committed HTML files as source text. Run the local static server below to open the viewers directly. Public web links require GitHub Pages to be enabled from the repo settings.
 
 ## Demo Links
 
-These links are intended to be opened through GitHub Pages, not through the repository file browser.
+These links work after running the local demo server:
 
 | Link | Title |
 | --- | --- |
-| [https://rcprobe.github.io/3DScape/](https://rcprobe.github.io/3DScape/) | Demo landing page |
-| [https://rcprobe.github.io/3DScape/demos/arkitscenes_47333462_viewer.html](https://rcprobe.github.io/3DScape/demos/arkitscenes_47333462_viewer.html) | ARKitScenes 47333462 RGB-D fusion viewer |
-| [https://rcprobe.github.io/3DScape/demos/arkitscenes_47333462_reliability_viewer.html](https://rcprobe.github.io/3DScape/demos/arkitscenes_47333462_reliability_viewer.html) | ARKitScenes 47333462 reliability diagnostic viewer |
-| [https://rcprobe.github.io/3DScape/demos/tum_freiburg1_xyz_viewer.html](https://rcprobe.github.io/3DScape/demos/tum_freiburg1_xyz_viewer.html) | TUM freiburg1_xyz RGB-D fusion viewer |
-| [https://rcprobe.github.io/3DScape/demos/tum_freiburg1_xyz_reliability_viewer.html](https://rcprobe.github.io/3DScape/demos/tum_freiburg1_xyz_reliability_viewer.html) | TUM freiburg1_xyz reliability diagnostic viewer |
-| [https://rcprobe.github.io/3DScape/demos/tum_freiburg3_long_office_household_viewer.html](https://rcprobe.github.io/3DScape/demos/tum_freiburg3_long_office_household_viewer.html) | TUM freiburg3 long office household RGB-D fusion viewer |
-| [https://rcprobe.github.io/3DScape/demos/tum_freiburg3_long_office_household_reliability_viewer.html](https://rcprobe.github.io/3DScape/demos/tum_freiburg3_long_office_household_reliability_viewer.html) | TUM freiburg3 long office household reliability diagnostic viewer |
-| [https://rcprobe.github.io/3DScape/assets/arkitscenes_47333462_preview.mp4](https://rcprobe.github.io/3DScape/assets/arkitscenes_47333462_preview.mp4) | ARKitScenes 47333462 source video preview |
+| [http://localhost:8000/](http://localhost:8000/) | Demo landing page |
+| [http://localhost:8000/demos/arkitscenes_47333462_viewer.html](http://localhost:8000/demos/arkitscenes_47333462_viewer.html) | ARKitScenes 47333462 RGB-D fusion viewer |
+| [http://localhost:8000/demos/arkitscenes_47333462_reliability_viewer.html](http://localhost:8000/demos/arkitscenes_47333462_reliability_viewer.html) | ARKitScenes 47333462 reliability diagnostic viewer |
+| [http://localhost:8000/demos/tum_freiburg1_xyz_viewer.html](http://localhost:8000/demos/tum_freiburg1_xyz_viewer.html) | TUM freiburg1_xyz RGB-D fusion viewer |
+| [http://localhost:8000/demos/tum_freiburg1_xyz_reliability_viewer.html](http://localhost:8000/demos/tum_freiburg1_xyz_reliability_viewer.html) | TUM freiburg1_xyz reliability diagnostic viewer |
+| [http://localhost:8000/demos/tum_freiburg3_long_office_household_viewer.html](http://localhost:8000/demos/tum_freiburg3_long_office_household_viewer.html) | TUM freiburg3 long office household RGB-D fusion viewer |
+| [http://localhost:8000/demos/tum_freiburg3_long_office_household_reliability_viewer.html](http://localhost:8000/demos/tum_freiburg3_long_office_household_reliability_viewer.html) | TUM freiburg3 long office household reliability diagnostic viewer |
+| [http://localhost:8000/assets/arkitscenes_47333462_preview.mp4](http://localhost:8000/assets/arkitscenes_47333462_preview.mp4) | ARKitScenes 47333462 source video preview |
 
 Local demo server:
 
@@ -63,17 +63,21 @@ Then open:
 http://localhost:8000/
 ```
 
-GitHub Pages demo landing page:
+To publish public demo links, enable GitHub Pages:
 
-```text
-https://rcprobe.github.io/3DScape/
-```
+1. Open the GitHub repo settings.
+2. Go to **Pages**.
+3. Set **Source** to **Deploy from a branch**.
+4. Set **Branch** to `main` and folder to `/docs`.
+5. Save and wait a few minutes.
+
+After that, the public demo landing page should be `https://rcprobe.github.io/3DScape/`. If the repo is private and your GitHub plan does not support private Pages, the Pages URLs will continue to 404 until the repo or a demo-only mirror is public.
 
 ## Reference Inputs
 
 This compressed preview is from ARKitScenes scan `47333462`, the sequence used for the ARKitScenes reconstruction demo. The full raw `.mov` is not committed because it is roughly 503 MB.
 
-<video src="https://rcprobe.github.io/3DScape/assets/arkitscenes_47333462_preview.mp4" controls width="720"></video>
+<video src="docs/assets/arkitscenes_47333462_preview.mp4" controls width="720"></video>
 
 
 ## Pipeline Overview

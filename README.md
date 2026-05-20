@@ -1,14 +1,10 @@
-# 3DScape V4 (MVP)
+# 3DScape (Experiment & MVP)
 
 **A lightweight RGB-D fusion pipeline for turning posed indoor depth frames into metric point clouds, occupancy previews, and browser-based scan viewers.**
 
 > RGB-D Dataset -> Dataset Adapter -> Backproject Depth -> Align With Camera Pose -> Fuse Points -> Export + Inspect
 
-This project does RGB-D reconstruction, fusing RGB frames that have depth, camera intrinsics, and camera poses.
-
-## Problem
-
-Indoor 3D reconstruction pipelines often depend on dataset-specific formats, camera geometry, and large generated artifacts. This project implements an **RGB-D reconstruction MVP** that:
+This project does RGB-D reconstruction, fusing RGB frames that have depth, camera intrinsics, and camera poses. It's an Indoor 3D reconstruction pipeline - these often depend on dataset-specific formats, camera geometry, large generated artifacts, etc., but my project implements an **RGB-D reconstruction MVP** that:
 
 1. Normalizes multiple posed RGB-D dataset formats into one frame contract.
 2. Backprojects depth pixels into 3D camera-space points.
@@ -16,23 +12,17 @@ Indoor 3D reconstruction pipelines often depend on dataset-specific formats, cam
 4. Fuses and downsamples points into a colored room-scale point cloud.
 5. Exports reproducible artifacts for inspection and evaluation.
 
-The goal is to demonstrate practical 3D perception engineering: intrinsics, poses, backprojection, dataset adapters, geometry fusion, evaluation, and baseline-vs-experimental comparison.
-
 ## Demo Preview
 
 These static previews are generated from the same embedded point data and default viewpoint used by the interactive viewers.
 
-| ARKitScenes RGB-D | ARKitScenes reliability |
+| ARKitScenes 47333462 | ARKitScenes 41418135 |
 | --- | --- |
-| <img src="docs/assets/arkitscenes_47333462_viewer_preview.png" alt="ARKitScenes RGB-D fusion point-cloud preview" width="420"> | <img src="docs/assets/arkitscenes_47333462_reliability_preview.png" alt="ARKitScenes reliability-colored point-cloud preview" width="420"> |
+| <img src="docs/assets/arkitscenes_47333462_viewer_preview.png" alt="ARKitScenes 47333462 RGB-D fusion point-cloud preview" width="420"> | <img src="docs/assets/arkitscenes_41418135_viewer_preview.png" alt="ARKitScenes 41418135 RGB-D fusion point-cloud preview" width="420"> |
 
-| TUM freiburg3 RGB-D | TUM freiburg3 reliability |
+| Reliability diagnostic | TUM RGB-D reproducibility scan |
 | --- | --- |
-| <img src="docs/assets/tum_freiburg3_long_office_household_viewer_preview.png" alt="TUM freiburg3 RGB-D fusion point-cloud preview" width="420"> | <img src="docs/assets/tum_freiburg3_long_office_household_reliability_preview.png" alt="TUM freiburg3 reliability-colored point-cloud preview" width="420"> |
-
-| TUM freiburg1 RGB-D | TUM freiburg1 reliability |
-| --- | --- |
-| <img src="docs/assets/tum_freiburg1_xyz_viewer_preview.png" alt="TUM freiburg1 RGB-D fusion point-cloud preview" width="420"> | <img src="docs/assets/tum_freiburg1_xyz_reliability_preview.png" alt="TUM freiburg1 reliability-colored point-cloud preview" width="420"> |
+| <img src="docs/assets/arkitscenes_47333462_reliability_preview.png" alt="ARKitScenes reliability-colored point-cloud preview" width="420"> | <img src="docs/assets/tum_freiburg3_long_office_household_viewer_preview.png" alt="TUM freiburg3 RGB-D fusion point-cloud preview" width="420"> |
 
 GitHub's normal repository browser displays committed HTML files as source text. Run the local static server below to open the viewers directly. Public web links require GitHub Pages to be enabled from the repo settings.
 
@@ -45,33 +35,12 @@ These links work after running the local demo server:
 | [http://localhost:8000/](http://localhost:8000/) | Demo landing page |
 | [http://localhost:8000/demos/arkitscenes_47333462_viewer.html](http://localhost:8000/demos/arkitscenes_47333462_viewer.html) | ARKitScenes 47333462 RGB-D fusion viewer |
 | [http://localhost:8000/demos/arkitscenes_47333462_reliability_viewer.html](http://localhost:8000/demos/arkitscenes_47333462_reliability_viewer.html) | ARKitScenes 47333462 reliability diagnostic viewer |
+| [http://localhost:8000/demos/arkitscenes_41418135_viewer.html](http://localhost:8000/demos/arkitscenes_41418135_viewer.html) | ARKitScenes 41418135 RGB-D fusion viewer |
 | [http://localhost:8000/demos/tum_freiburg1_xyz_viewer.html](http://localhost:8000/demos/tum_freiburg1_xyz_viewer.html) | TUM freiburg1_xyz RGB-D fusion viewer |
 | [http://localhost:8000/demos/tum_freiburg1_xyz_reliability_viewer.html](http://localhost:8000/demos/tum_freiburg1_xyz_reliability_viewer.html) | TUM freiburg1_xyz reliability diagnostic viewer |
 | [http://localhost:8000/demos/tum_freiburg3_long_office_household_viewer.html](http://localhost:8000/demos/tum_freiburg3_long_office_household_viewer.html) | TUM freiburg3 long office household RGB-D fusion viewer |
 | [http://localhost:8000/demos/tum_freiburg3_long_office_household_reliability_viewer.html](http://localhost:8000/demos/tum_freiburg3_long_office_household_reliability_viewer.html) | TUM freiburg3 long office household reliability diagnostic viewer |
 | [http://localhost:8000/assets/arkitscenes_47333462_preview.mp4](http://localhost:8000/assets/arkitscenes_47333462_preview.mp4) | ARKitScenes 47333462 source video preview |
-
-Local demo server:
-
-```bash
-python3 -m http.server 8000 --directory docs
-```
-
-Then open:
-
-```text
-http://localhost:8000/
-```
-
-To publish public demo links, enable GitHub Pages:
-
-1. Open the GitHub repo settings.
-2. Go to **Pages**.
-3. Set **Source** to **Deploy from a branch**.
-4. Set **Branch** to `main` and folder to `/docs`.
-5. Save and wait a few minutes.
-
-After that, the public demo landing page should be `https://rcprobe.github.io/3DScape/`. If the repo is private and your GitHub plan does not support private Pages, the Pages URLs will continue to 404 until the repo or a demo-only mirror is public.
 
 ## Reference Inputs
 
@@ -228,7 +197,7 @@ python3 scripts/make_pointcloud_viewer.py \
   --default-rotation-deg -150 0 27
 ```
 
-Compare against a reference mesh:
+Compare against a reference mesh (if you have one):
 
 ```bash
 python3 scripts/compare_to_reference_mesh.py \
@@ -237,17 +206,7 @@ python3 scripts/compare_to_reference_mesh.py \
   --out-dir workspaces/arkitscenes_47333462_mesh_compare
 ```
 
-## Example Outputs
-
-```text
-workspaces/arkitscenes_47333462_rgbd/
-  arkitscenes_rgbd_raw_metric.ply
-  arkitscenes_rgbd_downsampled_metric.ply
-  arkitscenes_rgbd_occupied_only.npz
-  arkitscenes_rgbd_top_down.png
-  arkitscenes_rgbd_manifest.json
-  pointcloud_viewer.html
-```
+## Outputs
 
 | Output | Description |
 | --- | --- |
@@ -260,12 +219,13 @@ workspaces/arkitscenes_47333462_rgbd/
 
 ## Current Metrics
 
-On ARKitScenes scan `47333462`, the reconstructed point cloud was compared against the provided reference mesh using approximate nearest-neighbor vertex distances.
+ARKitScenes reconstructions were compared against provided reference meshes using approximate nearest-neighbor vertex distances.
 
 | Run | Points | source->mesh median | source->mesh p90 | mesh coverage | mesh->source p90 |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| Classical RGB-D fusion | 62,953 | 0.0186 m | 0.0432 m | 95.03% | 0.0567 m |
-| Reliability Net soft fusion | 61,468 | 0.0192 m | 0.0441 m | 95.02% | 0.0579 m |
+| ARKitScenes 47333462 classical RGB-D fusion | 62,953 | 0.0186 m | 0.0432 m | 95.03% | 0.0567 m |
+| ARKitScenes 47333462 Reliability Net soft fusion | 61,468 | 0.0192 m | 0.0441 m | 95.02% | 0.0579 m |
+| ARKitScenes 41418135 classical RGB-D fusion | 105,223 | 0.0245 m | 0.0609 m | 94.32% | 0.0835 m |
 
 The learned reliability path is currently a diagnostic experiment, not a proven reconstruction-quality improvement.
 
@@ -304,7 +264,7 @@ Each dataset has its own parser, but all adapters emit the same `RGBDFrame` stru
 **Tradeoffs**
 
 - Each adapter still needs careful timestamp, pose, intrinsics, and depth-scale handling
-- Bad adapter assumptions can silently corrupt the reconstruction
+- Bad adapter assumptions can corrupt the reconstruction
 
 ### Classical RGB-D Fusion
 
@@ -318,7 +278,6 @@ The core reconstruction path uses deterministic geometry rather than an end-to-e
 
 **Tradeoffs**
 
-- Requires depth and camera poses
 - Does not infer missing geometry
 - Does not solve raw video reconstruction
 
@@ -336,7 +295,6 @@ The learned module is intentionally small: a PyTorch U-Net-style reliability pre
 
 - It is not an end-to-end reconstruction model
 - It needs stronger training and evaluation before claiming quality gains
-- Current ARKit mesh comparison is roughly tied/slightly worse than the classical baseline
 
 ## Limitations
 
@@ -357,7 +315,6 @@ python3 -m ruff check .
 
 ## Future Work
 
-- Add a stronger Reliability Net evaluation suite with AUROC, AUPRC, calibration, and risk-coverage curves
-- Add better heuristic baselines for reliability prediction
+- Add a stronger Reliability Net evaluation suite with AUROC, calibration, and risk-coverage curves
 - Add optional TSDF or ray-carving fusion for free-space reasoning
 - Add a pose-estimation front end for phone-video experiments

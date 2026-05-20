@@ -1,0 +1,32 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+.DS_Store
+/image.png
+build/
+dist/
+*.egg-info/
+
+# Local datasets and generated reconstruction outputs.
+workspaces/
+outputs/
+demo_outputs/
+data/
+
+# Heavy or license-sensitive artifacts should be regenerated locally.
+*.ply
+*.npz
+*.pt
+*.pth
+*.ckpt
+*.mov
+*.MOV
+*.mp4
+*.zip
+
+# Small curated docs media are part of the portfolio demo.
+!docs/assets/*.mp4

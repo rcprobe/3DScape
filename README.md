@@ -43,13 +43,12 @@ These links work after running the local demo server:
 | [http://localhost:8000/demos/tum_freiburg1_xyz_reliability_viewer.html](http://localhost:8000/demos/tum_freiburg1_xyz_reliability_viewer.html) | TUM freiburg1_xyz reliability diagnostic viewer |
 | [http://localhost:8000/demos/tum_freiburg3_long_office_household_viewer.html](http://localhost:8000/demos/tum_freiburg3_long_office_household_viewer.html) | TUM freiburg3 long office household RGB-D fusion viewer |
 | [http://localhost:8000/demos/tum_freiburg3_long_office_household_reliability_viewer.html](http://localhost:8000/demos/tum_freiburg3_long_office_household_reliability_viewer.html) | TUM freiburg3 long office household reliability diagnostic viewer |
-| [http://localhost:8000/assets/arkitscenes_47333462_preview.mp4](http://localhost:8000/assets/arkitscenes_47333462_preview.mp4) | ARKitScenes 47333462 source video preview |
 
 ## Reference Inputs
 
 This compressed preview is from ARKitScenes scan `47333462`, the sequence used for the ARKitScenes reconstruction demo. The full raw `.mov` is not committed because it is roughly 503 MB.
 
-<video src="docs/assets/arkitscenes_47333462_preview.mp4" controls width="720"></video>
+<video src="docs/assets/arkitscenes_47333462_preview.mp4" poster="docs/assets/arkitscenes_47333462_video_poster.png" controls preload="metadata" width="720"></video>
 
 
 ## Pipeline Overview

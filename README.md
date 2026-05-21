@@ -9,7 +9,7 @@ The experiment asks two questions:
 1. How far can a simple, inspectable geometry pipeline get using posed color+depth frames?
 2. Can a small learned model identify the depth observations most likely to create noisy or unstable geometry?
 
-In technical terms, the input is **posed RGB-D**: RGB images, depth maps, camera intrinsics, and camera poses.
+This type of input is called **posed RGB-D**: RGB images, depth maps, camera intrinsics, and camera poses.
 
 ```text
 Color + depth frames -> camera geometry -> fused 3D point cloud -> browser viewer
@@ -217,7 +217,7 @@ Then open:
 - ARKitScenes viewer: [http://localhost:8000/demos/arkitscenes_47333462_viewer.html](http://localhost:8000/demos/arkitscenes_47333462_viewer.html)
 - ARKitScenes reliability viewer: [http://localhost:8000/demos/arkitscenes_47333462_reliability_viewer.html](http://localhost:8000/demos/arkitscenes_47333462_reliability_viewer.html)
 
-The landing page links to the additional TUM RGB-D viewers. Public web links require GitHub Pages to be enabled from the repository settings.
+The landing page links to the additional TUM RGB-D viewers. The public web links require GitHub Pages to be enabled from the repository settings.
 
 ### Source Video Preview
 
@@ -227,7 +227,7 @@ This web-compressed full-length preview is from ARKitScenes scan `47333462`, the
 
 Click the thumbnail to open the source-video preview. The Pages demo renders this same preview as an inline playable video.
 
-## Experimental: Reliability Net
+## Experimental: 'Reliability Net'
 
 3DScape includes an optional learned reliability module for estimating which valid-looking depth observations are likely to be geometrically unstable.
 
@@ -246,7 +246,7 @@ Reliability scores can be used as:
 1. soft fusion weights during point-cloud construction
 2. diagnostic colors in reliability-colored point-cloud viewers
 
-The Reliability Net is included as an experimental uncertainty-estimation layer. In the current ARKitScenes comparison, it performs similarly to the classical fusion path but does not improve reconstruction quality. It remains separate from the deterministic geometry pipeline so the learned component can be evaluated without obscuring the baseline.
+The Reliability Net is included as an experimental uncertainty-estimation layer. In the current ARKitScenes comparison, it performs similarly to the classical fusion path but does not improve reconstruction quality. It remains separate from the deterministic geometry pipeline so the learned component can be evaluated without obscuring the baseline. It also looks cool, and was fun to make.
 
 ## Design Notes
 

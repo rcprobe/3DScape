@@ -42,7 +42,7 @@ ARKitScenes reconstructions were compared against provided reference meshes usin
 | ARKitScenes 47333462 classical RGB-D fusion | 62,953 | 0.0186 m | 0.0432 m | 95.03% | 0.0567 m |
 | ARKitScenes 47333462 Reliability Net soft fusion | 61,468 | 0.0192 m | 0.0441 m | 95.02% | 0.0579 m |
 
-The learned reliability path is currently a diagnostic experiment, not a proven reconstruction-quality improvement. The classical RGB-D fusion baseline remains the stronger reconstruction path in the current evaluation.
+The learned reliability path is currently a diagnostic experiment, not a proven reconstruction-quality improvement. It performs similarly to the classical RGB-D fusion baseline in the current evaluation.
 
 ## What It Does
 
@@ -83,19 +83,6 @@ flowchart TD
     H --> J["Occupancy Grid"]
     H --> K["Top-Down Debug Preview"]
     H --> L["HTML Viewer"]
-```
-
-Each `RGBDFrame` contains:
-
-```text
-rgb_path
-depth_path
-confidence_path
-intrinsics
-pose
-timestamp
-depth_scale_m
-name
 ```
 
 ## Supported Inputs
@@ -228,7 +215,7 @@ Click the thumbnail to open the compressed source-video preview. The Pages demo 
 | `*_manifest.json` | Run manifest with inputs, parameters, and output paths |
 | `pointcloud_viewer.html` | Standalone browser viewer with embedded point data |
 
-## Experimental: Reliability Net
+## Experimental: Reliability Net!
 
 3DScape includes an optional learned reliability module. The Reliability Net is a small PyTorch U-Net-style model that predicts a per-pixel reliability score from:
 
@@ -288,12 +275,9 @@ This adds a focused ML component where learning is useful: uncertainty and relia
 
 ## Limitations
 
-- Requires RGB-D frames with camera poses.
 - Does not reconstruct arbitrary `.MOV` files.
-- Does not estimate camera motion from RGB video.
 - Does not perform full SLAM.
 - Occupancy is occupied-surface only; free vs. unknown space is not modeled.
-- Dynamic objects are handled only through basic depth, confidence, and reliability filtering.
 - Reference-mesh evaluation uses approximate nearest-neighbor distances.
 - Reliability Net is experimental and currently underperforms the classical baseline on the ARKit mesh comparison.
 
@@ -345,9 +329,7 @@ python3 -m ruff check .
 - Add a stronger Reliability Net evaluation suite with AUROC, calibration, and risk-coverage curves.
 - Add optional TSDF or ray-carving fusion for free-space reasoning.
 - Add a pose-estimation front end for phone-video experiments.
-- Improve dynamic-object handling.
-- Add more robust cross-dataset reconstruction benchmarks.
 
 ## Scope
 
-3DScape is a research engineering project for RGB-D reconstruction, dataset normalization, point-cloud fusion, and reliability diagnostics. It is not a production SLAM system and does not reconstruct arbitrary RGB video without upstream pose and depth estimation.
+3DScape is a research project for RGB-D reconstruction, dataset normalization, point-cloud fusion, and reliability diagnostics. It is not a production SLAM system and does not reconstruct arbitrary RGB video without upstream pose and depth estimation.

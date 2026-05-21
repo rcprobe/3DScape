@@ -1,8 +1,8 @@
 # 3DScape
 
-**3DScape is a lightweight RGB-D reconstruction pipeline for turning posed indoor RGB-D frames into metric colored point clouds, occupancy previews, and browser-based scan viewers.**
+**3DScape is a lightweight RGB-D reconstruction pipeline that turns posed indoor RGB-D sequences into metric colored point clouds, occupancy previews, and interactive browser-based scan viewers.**
 
-It supports multiple RGB-D dataset formats through a shared frame contract, then uses deterministic geometry to backproject depth, transform points into a shared world coordinate system, fuse observations, downsample the result, and export reproducible inspection artifacts.
+The project is built around a simple idea: keep dataset parsing, camera geometry, fusion, and visualization cleanly separated so RGB-D reconstruction can be inspected, tested, and extended across datasets.
 
 ```text
 RGB-D Dataset -> Dataset Adapter -> RGBDFrame -> Backprojection -> World Alignment -> Fusion -> Export + Inspect
@@ -12,10 +12,10 @@ RGB-D Dataset -> Dataset Adapter -> RGBDFrame -> Backprojection -> World Alignme
 
 - Multi-dataset RGB-D reconstruction for ARKitScenes, TUM RGB-D, ScanNet-style folders, and generic manifests.
 - Shared `RGBDFrame` interface for RGB, depth, confidence, intrinsics, camera pose, timestamp, and depth scale.
-- Metric point-cloud fusion from posed RGB-D frames.
-- Reproducible outputs: PLY point clouds, occupancy grids, run manifests, top-down debug previews, and standalone HTML viewers.
+- Deterministic metric point-cloud fusion from posed RGB-D frames.
+- Reproducible artifacts: PLY point clouds, occupancy grids, run manifests, top-down debug previews, and standalone HTML viewers.
+- Reference-mesh evaluation on ARKitScenes, including median and p90 reconstruction distances plus mesh coverage.
 - Optional PyTorch Reliability Net experiment for per-pixel depth reliability diagnostics.
-- Reference-mesh comparison on ARKitScenes for quantitative sanity checks.
 
 ## Demo Preview
 
@@ -42,11 +42,11 @@ ARKitScenes reconstructions were compared against provided reference meshes usin
 | ARKitScenes 47333462 classical RGB-D fusion | 62,953 | 0.0186 m | 0.0432 m | 95.03% | 0.0567 m |
 | ARKitScenes 47333462 Reliability Net soft fusion | 61,468 | 0.0192 m | 0.0441 m | 95.02% | 0.0579 m |
 
-The learned reliability path is currently a diagnostic experiment, not a proven reconstruction-quality improvement. It performs similarly to the classical RGB-D fusion baseline in the current evaluation.
+The classical RGB-D fusion baseline is currently the strongest reconstruction path. The learned reliability path performs similarly, but does not yet improve reconstruction quality in this evaluation.
 
 ## What It Does
 
-3DScape reconstructs indoor geometry from RGB-D sequences where each frame has:
+3DScape reconstructs indoor geometry from RGB-D sequences with known depth, camera intrinsics, and camera poses. Each frame can include:
 
 - an RGB image
 - a depth map
@@ -66,7 +66,9 @@ For each frame, the pipeline:
 7. Downsamples the fused cloud.
 8. Exports point clouds, occupancy previews, run manifests, and browser viewers.
 
-## Pipeline
+This is not a raw monocular video reconstruction system. It assumes posed RGB-D input, meaning depth and camera pose must already be available from the dataset, sensor, or an upstream SLAM / pose-estimation system.
+
+## How It Works
 
 ```mermaid
 flowchart TD
@@ -81,6 +83,19 @@ flowchart TD
     H --> J["Occupancy Grid"]
     H --> K["Top-Down Debug Preview"]
     H --> L["HTML Viewer"]
+```
+
+Each `RGBDFrame` contains:
+
+```text
+rgb_path
+depth_path
+confidence_path
+intrinsics
+pose
+timestamp
+depth_scale_m
+name
 ```
 
 ## Supported Inputs
@@ -151,7 +166,7 @@ python3 scripts/reconstruct_scan.py \
   --pixel-stride 2
 ```
 
-## Generate an HTML Viewer
+### Generate an HTML Viewer
 
 ```bash
 python3 scripts/make_pointcloud_viewer.py \
@@ -161,7 +176,7 @@ python3 scripts/make_pointcloud_viewer.py \
   --default-rotation-deg -150 0 27
 ```
 
-## Compare Against a Reference Mesh
+### Compare Against a Reference Mesh
 
 If a reference mesh is available, use:
 
@@ -171,6 +186,17 @@ python3 scripts/compare_to_reference_mesh.py \
   --reference-ply /path/to/47333462_3dod_mesh.ply \
   --out-dir workspaces/arkitscenes_47333462_mesh_compare
 ```
+
+## Outputs
+
+| Output | Description |
+| --- | --- |
+| `*_raw_metric.ply` | Colored fused point cloud before final downsampling |
+| `*_downsampled_metric.ply` | Smaller colored point cloud for inspection and sharing |
+| `*_occupied_only.npz` | Occupied-surface voxel grid |
+| `*_top_down.png` | Optional 2D overhead density preview |
+| `*_manifest.json` | Run manifest with inputs, parameters, and output paths |
+| `pointcloud_viewer.html` | Standalone browser viewer with embedded point data |
 
 ## Demo / Local Viewers
 
@@ -182,19 +208,13 @@ python3 -m http.server 8000
 
 Then open:
 
-| Link | Title |
-| --- | --- |
-| [http://localhost:8000/](http://localhost:8000/) | Demo landing page |
-| [http://localhost:8000/demos/arkitscenes_47333462_viewer.html](http://localhost:8000/demos/arkitscenes_47333462_viewer.html) | ARKitScenes 47333462 RGB-D fusion viewer |
-| [http://localhost:8000/demos/arkitscenes_47333462_reliability_viewer.html](http://localhost:8000/demos/arkitscenes_47333462_reliability_viewer.html) | ARKitScenes 47333462 reliability diagnostic viewer |
-| [http://localhost:8000/demos/tum_freiburg1_xyz_viewer.html](http://localhost:8000/demos/tum_freiburg1_xyz_viewer.html) | TUM freiburg1_xyz RGB-D fusion viewer |
-| [http://localhost:8000/demos/tum_freiburg1_xyz_reliability_viewer.html](http://localhost:8000/demos/tum_freiburg1_xyz_reliability_viewer.html) | TUM freiburg1_xyz reliability diagnostic viewer |
-| [http://localhost:8000/demos/tum_freiburg3_long_office_household_viewer.html](http://localhost:8000/demos/tum_freiburg3_long_office_household_viewer.html) | TUM freiburg3 long office household RGB-D fusion viewer |
-| [http://localhost:8000/demos/tum_freiburg3_long_office_household_reliability_viewer.html](http://localhost:8000/demos/tum_freiburg3_long_office_household_reliability_viewer.html) | TUM freiburg3 long office household reliability diagnostic viewer |
+- Demo landing page: [http://localhost:8000/](http://localhost:8000/)
+- ARKitScenes viewer: [http://localhost:8000/demos/arkitscenes_47333462_viewer.html](http://localhost:8000/demos/arkitscenes_47333462_viewer.html)
+- ARKitScenes reliability viewer: [http://localhost:8000/demos/arkitscenes_47333462_reliability_viewer.html](http://localhost:8000/demos/arkitscenes_47333462_reliability_viewer.html)
 
-Public web links require GitHub Pages to be enabled from the repository settings.
+The landing page links to the additional TUM RGB-D viewers. Public web links require GitHub Pages to be enabled from the repository settings.
 
-## Source Video Preview
+### Source Video Preview
 
 This compressed preview is from ARKitScenes scan `47333462`, the sequence used for the ARKitScenes reconstruction demo. The full raw `.mov` is not committed because it is roughly 503 MB.
 
@@ -202,20 +222,11 @@ This compressed preview is from ARKitScenes scan `47333462`, the sequence used f
 
 Click the thumbnail to open the compressed source-video preview. The Pages demo renders this same preview as an inline playable video.
 
-## Outputs
-
-| Output | Description |
-| --- | --- |
-| `*_raw_metric.ply` | Colored fused point cloud before final downsampling |
-| `*_downsampled_metric.ply` | Smaller colored point cloud for inspection and sharing |
-| `*_occupied_only.npz` | Occupied-surface voxel grid |
-| `*_top_down.png` | Optional 2D overhead density sanity check, not the main visual output |
-| `*_manifest.json` | Run manifest with inputs, parameters, and output paths |
-| `pointcloud_viewer.html` | Standalone browser viewer with embedded point data |
-
 ## Experimental: Reliability Net
 
-3DScape includes an optional learned reliability module. The Reliability Net is a small PyTorch U-Net-style model that predicts a per-pixel reliability score from:
+3DScape includes an optional learned reliability module for estimating which valid-looking depth observations are likely to be geometrically unstable.
+
+The Reliability Net is a small PyTorch U-Net-style model that predicts a per-pixel reliability score from:
 
 ```text
 RGB
@@ -225,59 +236,28 @@ depth gradient x
 depth gradient y
 ```
 
-The model is intended to answer:
+Reliability scores can be used as:
 
-```text
-Which valid-looking depth observations are likely to be geometrically unstable?
-```
+1. soft fusion weights during point-cloud construction
+2. diagnostic colors in reliability-colored point-cloud viewers
 
-Reliability scores can be used in two ways:
-
-1. As soft fusion weights during point-cloud construction.
-2. As diagnostic colors in reliability-colored point-cloud viewers.
-
-This module is intentionally scoped. It does not replace camera geometry, estimate camera pose, hallucinate missing surfaces, or perform end-to-end reconstruction. It estimates which local RGB-D observations are likely to be stable enough to trust.
-
-Current status:
-
-- The module is wired into the reconstruction pipeline.
-- It produces reliability-colored diagnostic viewers.
-- It can be evaluated against the classical fusion baseline.
-- It does not yet improve reconstruction quality on the current ARKitScenes mesh comparison.
-
-This makes Reliability Net useful as a research and diagnostic extension, but not yet a production-quality reconstruction improvement.
+The Reliability Net is included as an experimental uncertainty-estimation layer. In the current ARKitScenes comparison, it performs similarly to the classical fusion path but does not improve reconstruction quality. It remains separate from the deterministic geometry pipeline so the learned component can be evaluated without obscuring the baseline.
 
 ## Design Notes
 
-### Dataset Adapters
-
-Each dataset has its own parser, but all adapters emit the same `RGBDFrame` structure.
-
-This keeps dataset-specific parsing separate from geometry logic and makes ARKitScenes, TUM RGB-D, ScanNet-style folders, and generic manifests share the same fusion engine.
-
-The main risk is that each adapter still needs careful handling of timestamps, poses, intrinsics, and depth scales. Bad assumptions at the adapter layer can corrupt the reconstruction.
-
-### Classical RGB-D Fusion
-
-The core reconstruction path uses deterministic camera geometry rather than an end-to-end learned model.
-
-This makes the pipeline easier to inspect, debug, and evaluate. It also works without training data.
-
-The tradeoff is that the system does not infer missing geometry, estimate camera motion from raw video, or solve arbitrary monocular reconstruction.
-
-### Reliability as a Focused ML Layer
-
-The learned component is deliberately narrow. Instead of replacing the full geometry pipeline, it predicts which depth observations are likely to be reliable before fusion.
-
-This adds a focused ML component where learning is useful: uncertainty and reliability estimation over noisy RGB-D observations.
+- **Dataset adapters:** Each dataset parser emits the same `RGBDFrame` structure, keeping dataset-specific parsing separate from geometry logic.
+- **Deterministic fusion baseline:** The core reconstruction path uses camera geometry instead of an end-to-end learned model, making failures easier to inspect and debug.
+- **Focused ML layer:** Reliability Net estimates depth-observation reliability without replacing pose, projection, or fusion logic.
 
 ## Limitations
 
+- Requires RGB-D frames with camera poses.
 - Does not reconstruct arbitrary `.MOV` files.
-- Does not perform full SLAM.
+- Does not perform full SLAM or estimate camera motion from RGB video.
 - Occupancy is occupied-surface only; free vs. unknown space is not modeled.
+- Dynamic objects are handled only through basic depth, confidence, and reliability filtering.
 - Reference-mesh evaluation uses approximate nearest-neighbor distances.
-- Reliability Net is experimental and currently underperforms the classical baseline on the ARKit mesh comparison.
+- Reliability Net is experimental and currently does not improve on the classical fusion baseline.
 
 ## Project Structure
 
@@ -327,8 +307,6 @@ python3 -m ruff check .
 - Add a stronger Reliability Net evaluation suite with AUROC, calibration, and risk-coverage curves.
 - Add optional TSDF or ray-carving fusion for free-space reasoning.
 - Add a pose-estimation front end for phone-video experiments.
-- Improve dynamic-object handling.
-- Add more robust cross-dataset reconstruction benchmarks.
 
 ## Scope
 

@@ -2,8 +2,6 @@
 
 **3DScape is a lightweight RGB-D reconstruction pipeline that turns posed indoor RGB-D sequences into metric colored point clouds, occupancy previews, and interactive browser-based scan viewers.**
 
-The project is built around a simple idea: keep dataset parsing, camera geometry, fusion, and visualization cleanly separated so RGB-D reconstruction can be inspected, tested, and extended across datasets.
-
 ```text
 RGB-D Dataset -> Dataset Adapter -> RGBDFrame -> Backprojection -> World Alignment -> Fusion -> Export + Inspect
 ```

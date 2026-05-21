@@ -251,12 +251,9 @@ The Reliability Net is included as an experimental uncertainty-estimation layer.
 
 ## Limitations
 
-- Requires RGB-D frames with camera poses.
-- Does not reconstruct arbitrary `.MOV` files.
-- Does not perform full SLAM or estimate camera motion from RGB video.
-- Occupancy is occupied-surface only; free vs. unknown space is not modeled.
+- Requires posed RGB-D input; it does not estimate camera motion or reconstruct arbitrary monocular video.
+- Occupancy outputs currently represent observed occupied surfaces only, not full free-space reasoning.
 - Dynamic objects are handled only through basic depth, confidence, and reliability filtering.
-- Reference-mesh evaluation uses approximate nearest-neighbor distances.
 - Reliability Net is experimental and currently does not improve on the classical fusion baseline.
 
 ## Project Structure

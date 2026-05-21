@@ -327,7 +327,9 @@ python3 -m ruff check .
 - Add a stronger Reliability Net evaluation suite with AUROC, calibration, and risk-coverage curves.
 - Add optional TSDF or ray-carving fusion for free-space reasoning.
 - Add a pose-estimation front end for phone-video experiments.
+- Improve dynamic-object handling.
+- Add more robust cross-dataset reconstruction benchmarks.
 
 ## Scope
 
-3DScape is a research project for RGB-D reconstruction, dataset normalization, point-cloud fusion, and reliability diagnostics. It is not a production SLAM system and does not reconstruct arbitrary RGB video without upstream pose and depth estimation.
+3DScape is a research engineering project for RGB-D reconstruction, dataset normalization, point-cloud fusion, and reliability diagnostics. It is not a production SLAM system and does not reconstruct arbitrary RGB video without upstream pose and depth estimation.

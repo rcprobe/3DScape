@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Check local dependencies for 3DScape V4."""
+"""Check local dependencies for 3DScape."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ import sys
 
 
 def main() -> None:
-    print("3DScape V4 dependency check")
+    print("3DScape dependency check")
     print(f"python: {sys.executable}")
     for module in ["cv2", "numpy", "PIL"]:
         status = "ok" if importlib.util.find_spec(module) is not None else "missing"

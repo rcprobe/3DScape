@@ -21,7 +21,7 @@ the Evaluation of RGB-D SLAM Systems," IROS, 2012.
 
 ## ARKitScenes
 
-The ARKitScenes demo viewers and short compressed reference clip are derived
+The ARKitScenes demo viewers and web-compressed reference clip are derived
 from ARKitScenes scan `47333462`. The full ARKitScenes raw dataset is not
 included in this repository. Use the official ARKitScenes source and terms when
 reproducing the demo locally.

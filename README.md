@@ -216,11 +216,11 @@ The landing page links to the additional TUM RGB-D viewers. Public web links req
 
 ### Source Video Preview
 
-This compressed preview is from ARKitScenes scan `47333462`, the sequence used for the ARKitScenes reconstruction demo. The full raw `.mov` is not committed because it is roughly 503 MB.
+This web-compressed full-length preview is from ARKitScenes scan `47333462`, the sequence used for the ARKitScenes reconstruction demo. The full raw `.mov` is not committed because it is roughly 503 MB.
 
 [![ARKitScenes 47333462 source video preview](docs/assets/arkitscenes_47333462_video_poster.png)](docs/assets/arkitscenes_47333462_preview.mp4)
 
-Click the thumbnail to open the compressed source-video preview. The Pages demo renders this same preview as an inline playable video.
+Click the thumbnail to open the source-video preview. The Pages demo renders this same preview as an inline playable video.
 
 ## Experimental: Reliability Net
 

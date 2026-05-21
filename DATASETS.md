@@ -21,7 +21,7 @@ This keeps the repo small and avoids redistributing files whose licenses may
 not permit redistribution.
 
 The exception is `docs/`, which contains lightweight generated demo viewers,
-static preview images, and one short compressed ARKitScenes reference clip for
+static preview images, and one web-compressed ARKitScenes reference clip for
 public inspection. These are demonstration artifacts, not full dataset
 redistribution. See `docs/ATTRIBUTION.md`.
 

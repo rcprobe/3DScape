@@ -66,8 +66,6 @@ For each frame, the pipeline:
 7. Downsamples the fused cloud.
 8. Exports point clouds, occupancy previews, run manifests, and browser viewers.
 
-This is not a raw monocular video reconstruction system. It assumes posed RGB-D input, meaning depth and camera pose must already be available from the dataset, sensor, or upstream SLAM/pose-estimation system.
-
 ## Pipeline
 
 ```mermaid
@@ -215,7 +213,7 @@ Click the thumbnail to open the compressed source-video preview. The Pages demo 
 | `*_manifest.json` | Run manifest with inputs, parameters, and output paths |
 | `pointcloud_viewer.html` | Standalone browser viewer with embedded point data |
 
-## Experimental: Reliability Net!
+## Experimental: Reliability Net
 
 3DScape includes an optional learned reliability module. The Reliability Net is a small PyTorch U-Net-style model that predicts a per-pixel reliability score from:
 

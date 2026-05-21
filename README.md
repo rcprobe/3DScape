@@ -1,11 +1,18 @@
 # 3DScape
 
-**3DScape is a lightweight RGB-D reconstruction pipeline that turns posed indoor RGB-D sequences into metric colored point clouds, occupancy previews, and interactive browser-based scan viewers.**
+**3DScape started as an experiment in reconstructing rooms from depth-camera scans. I then extended it with a small U-Net-style reliability model that highlights which parts of the reconstructed scan are likely to be stable or noisy.** 
+
+Some cameras capture both color and pixel depth - 3DScape takes those color-plus-depth frames, along with the camera position for each frame, and fuses them into an interactive 3D room scan. When developing 3D perception systems, it's very important that we can visually inspect their outputs to understand where geometry may be unreliable. This experiment combines a classical geometry pipeline with a small learned reliability layer to make that uncertainty visible.
+
+The experiment asks two questions:
+
+1. How far can a simple, inspectable geometry pipeline get using posed color+depth frames?
+2. Can a small learned model identify the depth observations most likely to create noisy or unstable geometry?
+
+In technical terms, the input is **posed RGB-D**: RGB images, depth maps, camera intrinsics, and camera poses.
 
 ```text
-RGB-D Dataset -> Dataset Adapter -> RGBDFrame -> Backprojection -> World Alignment -> Fusion -> Export + Inspect
-```
-
+Color + depth frames -> camera geometry -> fused 3D point cloud -> browser viewer
 ## Highlights
 
 - Multi-dataset RGB-D reconstruction for ARKitScenes, TUM RGB-D, ScanNet-style folders, and generic manifests.

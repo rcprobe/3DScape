@@ -1,8 +1,8 @@
 # 3DScape
 
-**3DScape turns depth-camera room scans into interactive 3D reconstructions, then recolors the geometry to show where the scan is likely stable or noisy.**
+**3DScape is a lightweight RGB-D reconstruction experiment that turns posed indoor color-plus-depth scans into metric point clouds, occupancy previews, and browser-based 3D viewers.**
 
-Some cameras capture both color and pixel depth - 3DScape takes those color-plus-depth frames, along with the camera position for each frame, and fuses them into an interactive 3D room scan. When developing 3D perception systems, it's very important that we can visually inspect what they built to understand where the geometry may be unreliable. This experiment combines a classical geometry pipeline with a small learned reliability layer to make that uncertainty visible.
+Some cameras capture both color and pixel depth. 3DScape takes those color-plus-depth frames, along with the camera pose for each frame, and fuses them into an interactive 3D room scan. For 3D perception systems, visual inspection matters because it makes geometry errors visible: floating points, fuzzy walls, missing surfaces, and unreliable depth measurements. This experiment combines a classical geometry pipeline with a small learned reliability layer to make that uncertainty easier to inspect.
 
 The project combines two deliberately separated pieces:
 

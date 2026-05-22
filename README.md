@@ -4,8 +4,6 @@
 
 Some cameras capture both color and pixel depth - 3DScape takes those color-plus-depth frames, along with the camera position for each frame, and fuses them into an interactive 3D room scan. When developing 3D perception systems, it's very important that we can visually inspect what they built to understand where the geometry may be unreliable. This experiment combines a classical geometry pipeline with a small learned reliability layer to make that uncertainty visible.
 
-3DScape also exports standalone HTML viewers with axis controls, so each scan can be inspected directly in a browser. The same viewer template can be reused for new scans generated with this pipeline.
-
 The project combines two deliberately separated pieces:
 
 1. a deterministic geometry pipeline that fuses RGB-D frames into a colored 3D point cloud

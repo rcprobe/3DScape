@@ -2,7 +2,7 @@
 
 **3DScape is an experiment in making 3D room scans inspectable. It reconstructs rooms from color-plus-depth camera data, uses a learned reliability model to visualize which parts of the geometry are likely stable or noisy, and exports a custom HTML viewer for exploring each scan in the browser.**
 
-Some cameras capture both color and pixel depth - 3DScape takes those color-plus-depth frames, along with the camera position for each frame, and fuses them into an interactive 3D room scan. When developing 3D perception systems, it's very important that we can visually inspect their outputs to understand where geometry may be unreliable. This experiment combines a classical geometry pipeline with a small learned reliability layer to make that uncertainty visible.
+Some cameras capture both color and depth for each pixel - 3DScape takes those color-plus-depth frames, along with the camera position for each frame, and fuses them into an interactive 3D room scan. When developing 3D perception systems, it's very important that we can visually inspect their outputs to understand where geometry may be unreliable. This experiment combines a classical geometry pipeline with a small learned reliability layer to make that uncertainty visible.
 
 The project combines two deliberately separated pieces:
 
@@ -20,7 +20,7 @@ Color & depth frames -> camera geometry -> fused 3D point cloud -> browser viewe
 - Multi-dataset RGB-D reconstruction for ARKitScenes, TUM RGB-D, ScanNet-style folders, and generic manifests.
 - Shared `RGBDFrame` interface for RGB, depth, confidence, intrinsics, camera pose, timestamp, and depth scale.
 - Deterministic metric point-cloud fusion from posed RGB-D frames.
-- Reproducible artifacts: occupancy grids, run manifests, top-down debug previews, and standalone HTML viewers.
+- Reproducible artifacts: occupancy grids, run manifests, and standalone HTML viewers.
 - Reference-mesh evaluation on ARKitScenes, including median and p90 reconstruction distances plus mesh coverage.
 - Optional PyTorch Reliability Net experiment for per-pixel depth reliability diagnostics.
 

@@ -1,6 +1,6 @@
 # 3DScape
 
-**3DScape is an experiment in making 3D room scans inspectable. It reconstructs rooms from color-plus-depth camera data, learns & visualizes which parts of the geometry are likely stable or noisy, and exports a custom HTML viewer for exploring each scan in the browser.**
+**3DScape is an experiment in making 3D room scans inspectable. It reconstructs rooms from color-plus-depth camera data, uses a learned reliability model to visualize which parts of the geometry are likely stable or noisy, and exports a custom HTML viewer for exploring each scan in the browser.**
 
 Some cameras capture both color and pixel depth - 3DScape takes those color-plus-depth frames, along with the camera position for each frame, and fuses them into an interactive 3D room scan. When developing 3D perception systems, it's very important that we can visually inspect their outputs to understand where geometry may be unreliable. This experiment combines a classical geometry pipeline with a small learned reliability layer to make that uncertainty visible.
 

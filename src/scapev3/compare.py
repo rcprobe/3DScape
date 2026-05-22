@@ -61,8 +61,8 @@ def compare_ply_point_sets(
     )
     s2r_stats = summarize_distances(s2r)
     r2s_stats = summarize_distances(r2s)
-    overlay_png = save_top_down_overlay(
-        output_dir / "comparison_top_down_overlay.png",
+    overlay_png = save_xz_overlay(
+        output_dir / "comparison_xz_overlay.png",
         source_points=source_points,
         reference_points=reference_points,
     )
@@ -168,14 +168,14 @@ def summarize_distances(distances: np.ndarray) -> dict[str, float]:
     }
 
 
-def save_top_down_overlay(
+def save_xz_overlay(
     path: str | Path,
     *,
     source_points: np.ndarray,
     reference_points: np.ndarray,
     image_size: int = 1000,
 ) -> Path:
-    """Save a top-down XZ overlay: reference in blue, source in orange."""
+    """Save an XZ projection overlay: reference in blue, source in orange."""
 
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)

@@ -52,7 +52,6 @@ workspaces/<scan_name>/
   *_raw_metric.ply
   *_downsampled_metric.ply
   *_occupied_only.npz
-  *_top_down.png
   *_manifest.json
   pointcloud_viewer.html
 ```

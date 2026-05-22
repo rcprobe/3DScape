@@ -17,5 +17,4 @@ def print_reconstruction_result(dataset_label: str, result: ReconstructionResult
     if result.reliability_ply:
         print(f"reliability_ply: {result.reliability_ply}")
     print(f"occupancy_npz: {result.occupancy_npz}")
-    print(f"top_down_png: {result.top_down_png}")
     print(f"manifest_json: {result.manifest_json}")

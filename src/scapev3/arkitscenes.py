@@ -69,8 +69,8 @@ def reconstruct_arkitscenes_rgbd(
     """Fuse ARKitScenes metric depth frames into a world-space point cloud.
 
     This path uses real ARKit trajectory and depth when available. It is meant
-    as a practical MVP baseline and sanity check before relying on learned
-    geometry models such as VGGT.
+    as a practical evaluation baseline before adding learned reliability or
+    upstream pose/depth estimation.
     """
 
     scan_dir = Path(scan_dir)

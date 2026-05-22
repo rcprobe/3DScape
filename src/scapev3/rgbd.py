@@ -80,7 +80,6 @@ class ReconstructionResult:
     raw_ply: str
     downsampled_ply: str
     occupancy_npz: str
-    top_down_png: str
     manifest_json: str
     frames_used: int
     raw_points: int
@@ -214,16 +213,7 @@ def reconstruct_rgbd_frames(
         down_points,
         voxel_size_m=settings.voxel_size_m,
     )
-    used_pose_centers = np.asarray(
-        [frame.pose.translation for frame, report in zip(selected, frame_reports, strict=False) if report.get("used")],
-        dtype=np.float32,
-    )
     frames_used = sum(1 for report in frame_reports if report.get("used"))
-    top_down_png = save_top_down_density(
-        output_dir / f"{output_prefix}_top_down.png",
-        down_points,
-        trajectory_points=used_pose_centers,
-    )
     manifest = {
         "dataset": dataset_name,
         "output_prefix": output_prefix,
@@ -231,7 +221,6 @@ def reconstruct_rgbd_frames(
         "downsampled_ply": str(down_ply),
         "reliability_ply": str(reliability_ply) if reliability_ply else None,
         "occupancy_npz": str(occupancy_npz),
-        "top_down_png": str(top_down_png),
         "frames_available": len(sorted_frames),
         "frames_selected": len(selected),
         "frames_used": frames_used,
@@ -263,7 +252,6 @@ def reconstruct_rgbd_frames(
         raw_ply=str(raw_ply),
         downsampled_ply=str(down_ply),
         occupancy_npz=str(occupancy_npz),
-        top_down_png=str(top_down_png),
         manifest_json=str(manifest_json),
         frames_used=frames_used,
         raw_points=int(points.shape[0]),
@@ -410,49 +398,6 @@ def _contrast_stretch(values: np.ndarray) -> np.ndarray:
     if high - low < 1e-6:
         return np.clip(values, 0.0, 1.0).astype(np.float32)
     return np.clip((values - low) / (high - low), 0.0, 1.0).astype(np.float32)
-
-
-def save_top_down_density(
-    path: str | Path,
-    points: np.ndarray,
-    *,
-    image_size: int = 900,
-    trajectory_points: np.ndarray | None = None,
-) -> Path:
-    """Write a simple XZ top-down density preview."""
-
-    path = Path(path)
-    path.parent.mkdir(parents=True, exist_ok=True)
-    if points.shape[0] == 0:
-        raise ValueError("Cannot render top-down density for an empty point cloud")
-    xz = points[:, [0, 2]].astype(np.float64)
-    low = np.percentile(xz, 1, axis=0)
-    high = np.percentile(xz, 99, axis=0)
-    span = np.maximum(high - low, 1e-6)
-    normalized = (xz - low[None, :]) / span[None, :]
-    pixels = np.floor(normalized * (image_size - 1)).astype(np.int32)
-    valid = np.all((pixels >= 0) & (pixels < image_size), axis=1)
-    canvas = np.zeros((image_size, image_size), dtype=np.float32)
-    np.add.at(canvas, (image_size - 1 - pixels[valid, 1], pixels[valid, 0]), 1.0)
-    if float(canvas.max()) > 0:
-        canvas = np.log1p(canvas)
-        canvas = canvas / float(canvas.max())
-    image = cv2.applyColorMap((canvas * 255).astype(np.uint8), cv2.COLORMAP_VIRIDIS)
-    if trajectory_points is not None and trajectory_points.size:
-        trajectory_xz = trajectory_points[:, [0, 2]].astype(np.float64)
-        trajectory_pixels = np.floor(((trajectory_xz - low[None, :]) / span[None, :]) * (image_size - 1))
-        trajectory_pixels = trajectory_pixels.astype(np.int32)
-        valid = np.all((trajectory_pixels >= 0) & (trajectory_pixels < image_size), axis=1)
-        trajectory_pixels = trajectory_pixels[valid]
-        for idx in range(1, trajectory_pixels.shape[0]):
-            start = (int(trajectory_pixels[idx - 1, 0]), int(image_size - 1 - trajectory_pixels[idx - 1, 1]))
-            end = (int(trajectory_pixels[idx, 0]), int(image_size - 1 - trajectory_pixels[idx, 1]))
-            cv2.line(image, start, end, (255, 255, 255), 2, cv2.LINE_AA)
-        for pixel in trajectory_pixels[:: max(1, trajectory_pixels.shape[0] // 24)]:
-            center = (int(pixel[0]), int(image_size - 1 - pixel[1]))
-            cv2.circle(image, center, 4, (0, 0, 255), -1, cv2.LINE_AA)
-    cv2.imwrite(str(path), image)
-    return path
 
 
 def resize_or_crop_rgb(image: np.ndarray, *, width: int, height: int) -> np.ndarray:

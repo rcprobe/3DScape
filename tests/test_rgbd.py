@@ -75,10 +75,10 @@ def test_reconstruct_rgbd_frames_writes_generic_outputs(tmp_path: Path) -> None:
 
     assert Path(result.downsampled_ply).exists()
     assert Path(result.occupancy_npz).exists()
-    assert Path(result.top_down_png).exists()
     manifest = json.loads(Path(result.manifest_json).read_text(encoding="utf-8"))
     assert manifest["dataset"] == "synthetic"
     assert manifest["frames_used"] == 1
+    assert not any(key.endswith("_png") for key in manifest)
 
 
 def test_weighted_voxel_downsample_biases_toward_reliable_points() -> None:

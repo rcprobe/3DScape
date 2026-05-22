@@ -9,8 +9,6 @@ The project combines two deliberately separated pieces:
 1. a deterministic geometry pipeline that fuses RGB-D frames into a colored 3D point cloud
 2. a small PyTorch Reliability Net that estimates which depth observations are likely to be stable or noisy
 
-The goal is not to hide the geometry inside a black-box model. It is to keep the reconstruction path inspectable, then add a focused learned layer for uncertainty diagnostics.
-
 3DScape uses **posed RGB-D** input: RGB images, depth maps, camera intrinsics, and camera poses.
 
 ```text
@@ -30,7 +28,7 @@ Color + depth frames -> camera geometry -> fused 3D point cloud -> browser viewe
 
 These static previews are generated from the same embedded point data and default viewpoint used by the interactive viewers.
 
-The viewer is looking at a fused point cloud: each visible dot is a 3D point created by taking a valid depth pixel from one frame, backprojecting it through the camera intrinsics, transforming it into a shared world coordinate system using the camera pose, and merging it with points from other frames. The boxes and axes are viewer guides for orientation; they are not learned scene objects.
+The viewer is looking at a fused point cloud: each visible dot is a 3D point created by taking a valid depth pixel from one frame, backprojecting it through the camera intrinsics, transforming it into a shared world coordinate system using the camera pose, and merging it with points from other frames. The boxes and axes are viewer guides for orientation.
 
 Color key:
 

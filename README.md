@@ -36,6 +36,7 @@ The viewer is looking at a fused point cloud: each visible dot is a 3D point cre
 | RGB-D fusion | Points are colored from the source RGB frames, so walls, furniture, and objects keep their image color. |
 | Reliability diagnostic | Points are colored by estimated depth reliability, not object class or semantic meaning. |
 
+Reliability Outputs:
 
 | ARKitScenes RGB-D | ARKitScenes reliability |
 | --- | --- |

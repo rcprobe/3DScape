@@ -30,7 +30,6 @@ These static previews are generated from the same embedded point data and defaul
 
 The viewer is looking at a fused point cloud: each visible dot is a 3D point created by taking a valid depth pixel from one frame, backprojecting it through the camera intrinsics, transforming it into a shared world coordinate system using the camera pose, and merging it with points from other frames. The boxes and axes are viewer guides for orientation.
 
-Color key:
 
 | Viewer type | What the colors mean |
 | --- | --- |
@@ -38,14 +37,6 @@ Color key:
 | Reliability diagnostic | Points are colored by estimated depth reliability, not object class or semantic meaning. |
 
 Reliability palette:
-
-| Color | Meaning |
-| --- | --- |
-| <img src="docs/assets/reliability_swatch_highest.svg" alt="Yellow reliability swatch" width="420"> | Highest reliability; most trusted local surface evidence |
-| <img src="docs/assets/reliability_swatch_high.svg" alt="Peach reliability swatch" width="420"> | High reliability; generally stable depth |
-| <img src="docs/assets/reliability_swatch_medium.svg" alt="Coral reliability swatch" width="420"> | Medium reliability; usable but less certain geometry |
-| <img src="docs/assets/reliability_swatch_low.svg" alt="Mauve reliability swatch" width="420"> | Low reliability; possible edge, occlusion, or noise artifacts |
-| <img src="docs/assets/reliability_swatch_lowest.svg" alt="Indigo reliability swatch" width="420"> | Lowest reliability; least trusted depth observations |
 
 | ARKitScenes RGB-D | ARKitScenes reliability |
 | --- | --- |
@@ -58,6 +49,16 @@ Reliability palette:
 | TUM freiburg1 RGB-D | TUM freiburg1 reliability |
 | --- | --- |
 | <img src="docs/assets/tum_freiburg1_xyz_viewer_preview.png" alt="TUM freiburg1 RGB-D fusion point-cloud preview" width="420"> | <img src="docs/assets/tum_freiburg1_xyz_reliability_preview.png" alt="TUM freiburg1 reliability-colored point-cloud preview" width="420"> |
+
+Color key:
+
+| Color | Meaning |
+| --- | --- |
+| <img src="docs/assets/reliability_swatch_highest.svg" alt="Yellow reliability swatch" width="420"> | Highest reliability; most trusted local surface evidence |
+| <img src="docs/assets/reliability_swatch_high.svg" alt="Peach reliability swatch" width="420"> | High reliability; generally stable depth |
+| <img src="docs/assets/reliability_swatch_medium.svg" alt="Coral reliability swatch" width="420"> | Medium reliability; usable but less certain geometry |
+| <img src="docs/assets/reliability_swatch_low.svg" alt="Mauve reliability swatch" width="420"> | Low reliability; possible edge, occlusion, or noise artifacts |
+| <img src="docs/assets/reliability_swatch_lowest.svg" alt="Indigo reliability swatch" width="420"> | Lowest reliability; least trusted depth observations |
 
 ## Results
 

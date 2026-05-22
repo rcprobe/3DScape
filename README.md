@@ -1,6 +1,6 @@
 # 3DScape
 
-**3DScape is an experiment in reconstructing 3D room scans and making them easily interpretable. It reconstructs rooms from color-plus-depth camera data, uses a learned reliability model to visualize which parts of the geometry are likely stable or noisy, and exports a custom HTML viewer for exploring each scan in the browser.**
+**3DScape is an experiment in building 3D room scans that are easy to interpret. It reconstructs rooms from color-plus-depth camera data, uses a learned reliability model to visualize which parts of the geometry are likely stable or noisy, and exports a custom HTML viewer for exploring each scan in the browser.**
 
 Some cameras capture both color and depth for each pixel; 3DScape takes those color-plus-depth frames, along with the camera position for each frame, and fuses them into an interactive 3D point cloud. When developing 3D perception systems, it's important that we can visually inspect their outputs to understand where geometry may be unreliable. This experiment combines a classical geometry pipeline with a small learned reliability layer to make that uncertainty visible.
 
@@ -69,7 +69,7 @@ ARKitScenes reconstructions were compared against provided reference meshes usin
 | ARKitScenes 47333462 classical RGB-D fusion | 62,953 | 0.0186 m | 0.0432 m | 95.03% | 0.0567 m |
 | ARKitScenes 47333462 Reliability Net soft fusion | 61,468 | 0.0192 m | 0.0441 m | 95.02% | 0.0579 m |
 
-The classical RGB-D fusion baseline is currently the strongest reconstruction path. The learned reliability path performs similarly, but does not yet improve reconstruction quality in this evaluation.
+The classical RGB-D fusion baseline is currently the strongest reconstruction path. The learned reliability path does not improve reconstruction quality in this evaluation, but it remains useful as a diagnostic layer for visualizing which depth observations the model distrusts.
 
 ## What It Does
 
@@ -108,8 +108,7 @@ flowchart TD
     G --> H["Voxel Downsampling"]
     H --> I["PLY Point Cloud"]
     H --> J["Occupancy Grid"]
-    H --> K["Top-Down Debug Preview"]
-    H --> L["HTML Viewer"]
+    H --> K["HTML Viewer"]
 ```
 
 Each `RGBDFrame` contains:

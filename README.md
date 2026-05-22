@@ -1,8 +1,8 @@
 # 3DScape
 
-**3DScape is a lightweight RGB-D reconstruction experiment that turns posed indoor color-plus-depth scans into metric point clouds, occupancy previews, and browser-based 3D viewers.**
+**3DScape is an experiment in making 3D room scans inspectable. It reconstructs rooms from color-plus-depth camera data, learns & visualizes which parts of the geometry are likely stable or noisy, and exports a custom HTML viewer for exploring each scan in the browser.**
 
-Some cameras capture both color and pixel depth. 3DScape takes those color-plus-depth frames, along with the camera pose for each frame, and fuses them into an interactive 3D room scan. For 3D perception systems, visual inspection matters because it makes geometry errors visible: floating points, fuzzy walls, missing surfaces, and unreliable depth measurements. This experiment combines a classical geometry pipeline with a small learned reliability layer to make that uncertainty easier to inspect.
+Some cameras capture both color and pixel depth - 3DScape takes those color-plus-depth frames, along with the camera position for each frame, and fuses them into an interactive 3D room scan. When developing 3D perception systems, it's very important that we can visually inspect their outputs to understand where geometry may be unreliable. This experiment combines a classical geometry pipeline with a small learned reliability layer to make that uncertainty visible.
 
 The project combines two deliberately separated pieces:
 
@@ -12,7 +12,7 @@ The project combines two deliberately separated pieces:
 3DScape uses **posed RGB-D** input: RGB images, depth maps, camera intrinsics, and camera poses.
 
 ```text
-Color + depth frames -> camera geometry -> fused 3D point cloud -> browser viewer
+Color & depth frames -> camera geometry -> fused 3D point cloud -> browser viewer
 ```
 
 ## Highlights
@@ -20,7 +20,7 @@ Color + depth frames -> camera geometry -> fused 3D point cloud -> browser viewe
 - Multi-dataset RGB-D reconstruction for ARKitScenes, TUM RGB-D, ScanNet-style folders, and generic manifests.
 - Shared `RGBDFrame` interface for RGB, depth, confidence, intrinsics, camera pose, timestamp, and depth scale.
 - Deterministic metric point-cloud fusion from posed RGB-D frames.
-- Reproducible artifacts: PLY point clouds, occupancy grids, run manifests, top-down debug previews, and standalone HTML viewers.
+- Reproducible artifacts: occupancy grids, run manifests, top-down debug previews, and standalone HTML viewers.
 - Reference-mesh evaluation on ARKitScenes, including median and p90 reconstruction distances plus mesh coverage.
 - Optional PyTorch Reliability Net experiment for per-pixel depth reliability diagnostics.
 
@@ -221,7 +221,6 @@ python3 scripts/compare_to_reference_mesh.py \
 | `*_raw_metric.ply` | Colored fused point cloud before final downsampling |
 | `*_downsampled_metric.ply` | Smaller colored point cloud for inspection and sharing |
 | `*_occupied_only.npz` | Occupied-surface voxel grid |
-| `*_top_down.png` | Optional 2D overhead density preview |
 | `*_manifest.json` | Run manifest with inputs, parameters, and output paths |
 | `pointcloud_viewer.html` | Standalone browser viewer with embedded point data |
 

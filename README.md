@@ -1,18 +1,24 @@
 # 3DScape
 
-**3DScape started as an experiment in reconstructing rooms from depth-camera scans. I then extended it with a small U-Net-style reliability model that highlights which parts of the reconstructed scan are likely to be stable or noisy.** 
+**3DScape turns depth-camera room scans into interactive 3D reconstructions, then recolors the geometry to show where the scan is likely stable or noisy.**
 
-Some cameras capture both color and pixel depth - 3DScape takes those color-plus-depth frames, along with the camera position for each frame, and fuses them into an interactive 3D room scan. When developing 3D perception systems, it's very important that we can visually inspect their outputs to understand where geometry may be unreliable. This experiment combines a classical geometry pipeline with a small learned reliability layer to make that uncertainty visible.
+Some cameras capture both color and pixel depth - 3DScape takes those color-plus-depth frames, along with the camera position for each frame, and fuses them into an interactive 3D room scan. When developing 3D perception systems, it's very important that we can visually inspect what they built to understand where the geometry may be unreliable. This experiment combines a classical geometry pipeline with a small learned reliability layer to make that uncertainty visible.
 
-The experiment asks two questions:
+3DScape also exports standalone HTML viewers with axis controls, so each scan can be inspected directly in a browser. The same viewer template can be reused for new scans generated with this pipeline.
 
-1. How far can a simple, inspectable geometry pipeline get using posed color+depth frames?
-2. Can a small learned model identify the depth observations most likely to create noisy or unstable geometry?
+The project combines two deliberately separated pieces:
 
-This type of input is called **posed RGB-D**: RGB images, depth maps, camera intrinsics, and camera poses.
+1. a deterministic geometry pipeline that fuses RGB-D frames into a colored 3D point cloud
+2. a small PyTorch Reliability Net that estimates which depth observations are likely to be stable or noisy
+
+The goal is not to hide the geometry inside a black-box model. It is to keep the reconstruction path inspectable, then add a focused learned layer for uncertainty diagnostics.
+
+3DScape uses **posed RGB-D** input: RGB images, depth maps, camera intrinsics, and camera poses.
 
 ```text
 Color + depth frames -> camera geometry -> fused 3D point cloud -> browser viewer
+```
+
 ## Highlights
 
 - Multi-dataset RGB-D reconstruction for ARKitScenes, TUM RGB-D, ScanNet-style folders, and generic manifests.
@@ -25,6 +31,25 @@ Color + depth frames -> camera geometry -> fused 3D point cloud -> browser viewe
 ## Demo Preview
 
 These static previews are generated from the same embedded point data and default viewpoint used by the interactive viewers.
+
+The viewer is looking at a fused point cloud: each visible dot is a 3D point created by taking a valid depth pixel from one frame, backprojecting it through the camera intrinsics, transforming it into a shared world coordinate system using the camera pose, and merging it with points from other frames. The boxes and axes are viewer guides for orientation; they are not learned scene objects.
+
+Color key:
+
+| Viewer type | What the colors mean |
+| --- | --- |
+| RGB-D fusion | Points are colored from the source RGB frames, so walls, furniture, and objects keep their image color. |
+| Reliability diagnostic | Points are colored by estimated depth reliability, not object class or semantic meaning. |
+
+Reliability palette:
+
+| Color | Meaning |
+| --- | --- |
+| Yellow `#f5ea9e` | Highest reliability; most trusted local surface evidence |
+| Peach `#f9b276` | High reliability; generally stable depth |
+| Coral `#e87783` | Medium reliability; usable but less certain geometry |
+| Mauve `#b35a9a` | Low reliability; possible edge, occlusion, or noise artifacts |
+| Indigo `#5b56a2` | Lowest reliability; least trusted depth observations |
 
 | ARKitScenes RGB-D | ARKitScenes reliability |
 | --- | --- |
@@ -203,9 +228,13 @@ python3 scripts/compare_to_reference_mesh.py \
 | `*_manifest.json` | Run manifest with inputs, parameters, and output paths |
 | `pointcloud_viewer.html` | Standalone browser viewer with embedded point data |
 
-## Demo / Local Viewers
+## Demo Viewers
 
-GitHub's normal repository browser displays committed HTML files as source text. To open the interactive viewers directly, run a local static server from the repository root.
+The public demo page is hosted with GitHub Pages:
+
+- [https://rcprobe.github.io/3DScape/](https://rcprobe.github.io/3DScape/)
+
+GitHub's normal repository browser displays committed HTML files as source text. Use the Pages link above, or run a local static server from the repository root.
 
 ```bash
 python3 -m http.server 8000
@@ -217,7 +246,7 @@ Then open:
 - ARKitScenes viewer: [http://localhost:8000/demos/arkitscenes_47333462_viewer.html](http://localhost:8000/demos/arkitscenes_47333462_viewer.html)
 - ARKitScenes reliability viewer: [http://localhost:8000/demos/arkitscenes_47333462_reliability_viewer.html](http://localhost:8000/demos/arkitscenes_47333462_reliability_viewer.html)
 
-The landing page links to the additional TUM RGB-D viewers. The public web links require GitHub Pages to be enabled from the repository settings.
+The landing page links to the additional TUM RGB-D viewers.
 
 ### Source Video Preview
 
@@ -227,7 +256,7 @@ This web-compressed full-length preview is from ARKitScenes scan `47333462`, the
 
 Click the thumbnail to open the source-video preview. The Pages demo renders this same preview as an inline playable video.
 
-## Experimental: 'Reliability Net'
+## Experimental: Reliability Net
 
 3DScape includes an optional learned reliability module for estimating which valid-looking depth observations are likely to be geometrically unstable.
 
@@ -246,7 +275,7 @@ Reliability scores can be used as:
 1. soft fusion weights during point-cloud construction
 2. diagnostic colors in reliability-colored point-cloud viewers
 
-The Reliability Net is included as an experimental uncertainty-estimation layer. In the current ARKitScenes comparison, it performs similarly to the classical fusion path but does not improve reconstruction quality. It remains separate from the deterministic geometry pipeline so the learned component can be evaluated without obscuring the baseline. It also looks cool, and was fun to make.
+The Reliability Net is included as an experimental uncertainty-estimation layer. In the current ARKitScenes comparison, it performs similarly to the classical fusion path but does not improve reconstruction quality. It remains separate from the deterministic geometry pipeline so the learned component can be evaluated without obscuring the baseline.
 
 ## Design Notes
 

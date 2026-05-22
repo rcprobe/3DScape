@@ -41,11 +41,11 @@ Reliability palette:
 
 | Color | Meaning |
 | --- | --- |
-| Yellow `#f5ea9e` | Highest reliability; most trusted local surface evidence |
-| Peach `#f9b276` | High reliability; generally stable depth |
-| Coral `#e87783` | Medium reliability; usable but less certain geometry |
-| Mauve `#b35a9a` | Low reliability; possible edge, occlusion, or noise artifacts |
-| Indigo `#5b56a2` | Lowest reliability; least trusted depth observations |
+| <img src="docs/assets/reliability_swatch_highest.svg" alt="Yellow reliability swatch" width="420"> | Highest reliability; most trusted local surface evidence |
+| <img src="docs/assets/reliability_swatch_high.svg" alt="Peach reliability swatch" width="420"> | High reliability; generally stable depth |
+| <img src="docs/assets/reliability_swatch_medium.svg" alt="Coral reliability swatch" width="420"> | Medium reliability; usable but less certain geometry |
+| <img src="docs/assets/reliability_swatch_low.svg" alt="Mauve reliability swatch" width="420"> | Low reliability; possible edge, occlusion, or noise artifacts |
+| <img src="docs/assets/reliability_swatch_lowest.svg" alt="Indigo reliability swatch" width="420"> | Lowest reliability; least trusted depth observations |
 
 | ARKitScenes RGB-D | ARKitScenes reliability |
 | --- | --- |
